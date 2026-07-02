@@ -47,7 +47,11 @@ const AdminPage = () => {
     seances: true,
     sales: true,
   });
-  const [confirmData, setConfirmData] = useState({ show: false, message: "", onConfirm: null });
+  const [confirmData, setConfirmData] = useState({
+    show: false,
+    message: "",
+    onConfirm: null,
+  });
   const navigate = useNavigate();
 
   const toggleSection = (section) => {
@@ -73,7 +77,9 @@ const AdminPage = () => {
         setHallPlacesCount(response.result.halls[0]?.hall_places ?? 0);
         setHallConfig(response.result.halls[0]?.hall_config);
         setHallConfigId(response.result.halls[0]?.id);
-        setHallPriceStandart(response.result.halls[0]?.hall_price_standart ?? 0);
+        setHallPriceStandart(
+          response.result.halls[0]?.hall_price_standart ?? 0,
+        );
         setHallPriceVip(response.result.halls[0]?.hall_price_vip ?? 0);
         setHallPriceId(response.result.halls[0]?.id ?? 0);
         setDataSeances(response.result?.seances);
@@ -82,24 +88,29 @@ const AdminPage = () => {
     });
   }, []);
 
-  const onDataChange = (newData) => setData((data) => ({ ...data, ...newData }));
-  const onDataHallChange = (newDataHall) => setData((data) => ({
-    ...data,
-    halls: data.halls.map((hall) => hall.id === newDataHall.id ? newDataHall : hall),
-  }));
+  const onDataChange = (newData) =>
+    setData((data) => ({ ...data, ...newData }));
+  const onDataHallChange = (newDataHall) =>
+    setData((data) => ({
+      ...data,
+      halls: data.halls.map((hall) =>
+        hall.id === newDataHall.id ? newDataHall : hall,
+      ),
+    }));
+
   const onDataHallValuesChange = (newDataHallValues) => {
-    setHallRowsCount(ne
-
-
-wDataHallValues?.hall_rows ?? 0);
+    setHallRowsCount(newDataHallValues?.hall_rows ?? 0);
     setHallPlacesCount(newDataHallValues?.hall_places ?? 0);
     setHallConfig(newDataHallValues?.hall_config);
     setHallPriceStandart(newDataHallValues?.hall_price_standart ?? 0);
     setHallPriceVip(newDataHallValues?.hall_price_vip ?? 0);
     setOpenSaleValue(newDataHallValues?.hall_open ?? 0);
   };
-  const onDataSeancesAdd = (newDataSeances) => setDataSeances((data) => [...data, newDataSeances]);
-  const onDataSeanceRemove = (id) => setDataSeances((data) => data.filter((seance) => seance.id !== id));
+
+  const onDataSeancesAdd = (newDataSeances) =>
+    setDataSeances((data) => [...data, newDataSeances]);
+  const onDataSeanceRemove = (id) =>
+    setDataSeances((data) => data.filter((seance) => seance.id !== id));
   const onDataSeancesChange = (data) => setDataSeances(data.seances);
   const onDataForSeance = (newDataSeance) => setDataForSeance(newDataSeance);
 
@@ -109,13 +120,18 @@ wDataHallValues?.hall_rows ?? 0);
   return (
     <div className="page">
       <header className="header">
-        <Link to="/"><img src={logoAdmin} alt="home" /></Link>
+        <Link to="/">
+          <img src={logoAdmin} alt="home" />
+        </Link>
       </header>
 
       <main className="admin-main">
         {/* Управление залами */}
         <section className="admin-section">
-          <header className="admin-section__header" onClick={() => toggleSection("halls")}>
+          <header
+            className="admin-section__header"
+            onClick={() => toggleSection("halls")}
+          >
             <h2 className="admin-section__title">Управление залами</h2>
           </header>
           {openSections.halls && (
@@ -125,13 +141,30 @@ wDataHallValues?.hall_rows ?? 0);
                 {data?.halls?.map((hall) => (
                   <div className="admin-settings__hall-name" key={hall.id}>
                     <span>- {hall.hall_name}</span>
-                    <button className="admin-settings__btn-remove" type="button"
-                      onClick={(event) => onRemoveHall(event, hall.id, hall.hall_name, onDataChange, onDataHallValuesChange, openModal)} />
+                    <button
+                      className="admin-settings__btn-remove"
+                      type="button"
+                      onClick={(event) =>
+                        onRemoveHall(
+                          event,
+                          hall.id,
+                          hall.hall_name,
+                          onDataChange,
+                          onDataHallValuesChange,
+                          openModal,
+                        )
+                      }
+                    />
                   </div>
                 ))}
               </div>
               <div className="actions actions_create-hall">
-                <button className="btn_ok" onClick={(event) => createHall(event)}>Создать зал</button>
+                <button
+                  className="btn_ok"
+                  onClick={(event) => createHall(event)}
+                >
+                  Создать зал
+                </button>
               </div>
             </div>
           )}
@@ -139,51 +172,129 @@ wDataHallValues?.hall_rows ?? 0);
 
         {/* Конфигурация залов */}
         <section className="admin-section">
-          <header className="admin-section__header" onClick={() => toggleSection("config")}>
+          <header
+            className="admin-section__header"
+            onClick={() => toggleSection("config")}
+          >
             <h2 className="admin-section__title">Конфигурация залов</h2>
           </header>
           {openSections.config && (
-            <form className="admin-settings" onSubmit={(event) => onChangeHallConfig(event, onDataHallChange, setHallConfig)}>
+            <form
+              className="admin-settings"
+              onSubmit={(event) =>
+                onChangeHallConfig(event, onDataHallChange, setHallConfig)
+              }
+            >
               <div className="admin-settings__item">
-                <p className="admin-settings__title">Выберите зал для конфигурации:</p>
+                <p className="admin-settings__title">
+                  Выберите зал для конфигурации:
+                </p>
                 <div className="halls__list">
                   {data?.halls?.map((hall, index) => (
-                    <HallInList hall={hall} index={index} key={hall.id} idName="hall-configuration"
-                      onClickFunc={() => { setHallConfigId(hall.id); setHallRowsCount(hall.hall_rows); setHallPlacesCount(hall.hall_places); setHallConfig(hall.hall_config); }} />
+                    <HallInList
+                      hall={hall}
+                      index={index}
+                      key={hall.id}
+                      idName="hall-configuration"
+                      onClickFunc={() => {
+                        setHallConfigId(hall.id);
+                        setHallRowsCount(hall.hall_rows);
+                        setHallPlacesCount(hall.hall_places);
+                        setHallConfig(hall.hall_config);
+                      }}
+                    />
                   ))}
                 </div>
               </div>
               <div className="admin-settings__item">
-                <p className="admin-settings__title">Укажите количество рядов и максимальное количество кресел в ряду:</p>
+                <p className="admin-settings__title">
+                  Укажите количество рядов и максимальное количество кресел в
+                  ряду:
+                </p>
                 <div className="hall-size">
-                  <label className="admin__label hall-size__label">Рядов, шт
-                    <input className="admin__input hall-size__input" type="number" name="rowCount" value={hallRowsCount}
-                      onChange={(e) => { const v = Number(e.currentTarget.value); if (v > 0) setHallRowsCount(v); }} required />
+                  <label className="admin__label hall-size__label">
+                    Рядов, шт
+                    <input
+                      className="admin__input hall-size__input"
+                      type="number"
+                      name="rowCount"
+                      value={hallRowsCount}
+                      onChange={(e) => {
+                        const v = Number(e.currentTarget.value);
+                        if (v > 0) setHallRowsCount(v);
+                      }}
+                      required
+                    />
                   </label>
-                  <img className="admin__multiply" src={multiplication} alt="multiply" />
-                  <label className="admin__label hall-size__label">Мест, шт
-                    <input className="admin__input hall-size__input" type
-
-
-="number" name="placeCount" value={hallPlacesCount}
-                      onChange={(e) => { const v = Number(e.currentTarget.value); if (v > 0) setHallPlacesCount(v); }} required />
+                  <img
+                    className="admin__multiply"
+                    src={multiplication}
+                    alt="multiply"
+                  />
+                  <label className="admin__label hall-size__label">
+                    Мест, шт
+                    <input
+                      className="admin__input hall-size__input"
+                      type="number"
+                      name="placeCount"
+                      value={hallPlacesCount}
+                      onChange={(e) => {
+                        const v = Number(e.currentTarget.value);
+                        if (v > 0) setHallPlacesCount(v);
+                      }}
+                      required
+                    />
                   </label>
                 </div>
               </div>
               <div className="admin-settings__item">
-                <p className="admin-settings__title">Теперь вы можете указать типы кресел на схеме зала:</p>
+                <p className="admin-settings__title">
+                  Теперь вы можете указать типы кресел на схеме зала:
+                </p>
                 <div className="chair-types">
-                  <span className="chair-types__item"><img src={chair} alt="chair" />— обычные кресла</span>
-                  <span className="chair-types__item"><img src={chairVip} alt="chair-vip" />— VIP кресла</span>
-                  <span className="chair-types__item"><img src={chairNone} alt="chair-none" />— заблокированные (нет кресла)</span>
+                  <span className="chair-types__item">
+                    <img src={chair} alt="chair" />— обычные кресла
+                  </span>
+                  <span className="chair-types__item">
+                    <img src={chairVip} alt="chair-vip" />— VIP кресла
+                  </span>
+                  <span className="chair-types__item">
+                    <img src={chairNone} alt="chair-none" />— заблокированные
+                    (нет кресла)
+                  </span>
                 </div>
-                <p className="chair-types__description">Чтобы изменить вид кресла, нажмите по нему{window.innerWidth >= 1199 ? " левой кнопкой мыши" : ""}</p>
-                <HallGraphic hallRowsCount={hallRowsCount} hallPlacesCount={hallPlacesCount} hallConfig={hallConfig}
-                  setHallConfig={(newHallConfig) => setHallConfig(newHallConfig)} isAdminPage={true} />
+                <p className="chair-types__description">
+                  Чтобы изменить вид кресла, нажмите по нему
+                  {window.innerWidth >= 1199 ? " левой кнопкой мыши" : ""}
+                </p>
+                <HallGraphic
+                  hallRowsCount={hallRowsCount}
+                  hallPlacesCount={hallPlacesCount}
+                  hallConfig={hallConfig}
+                  setHallConfig={(newHallConfig) =>
+                    setHallConfig(newHallConfig)
+                  }
+                  isAdminPage={true}
+                />
               </div>
               <div className="actions actions_halls-configuration">
-                <button className="btn_cancel" type="button"
-                  onClick={(event) => onCancelHallConfig(event, data, hallConfigId, setHallRowsCount, setHallPlacesCount, setHallConfig, hallConfig)}>Отмена</button>
+                <button
+                  className="btn_cancel"
+                  type="button"
+                  onClick={(event) =>
+                    onCancelHallConfig(
+                      event,
+                      data,
+                      hallConfigId,
+                      setHallRowsCount,
+                      setHallPlacesCount,
+                      setHallConfig,
+                      hallConfig,
+                    )
+                  }
+                >
+                  Отмена
+                </button>
                 <button className="btn_ok btn_save">Сохранить</button>
               </div>
             </form>
@@ -192,44 +303,106 @@ wDataHallValues?.hall_rows ?? 0);
 
         {/* Конфигурация цен */}
         <section className="admin-section">
-          <header className="admin-section__header" onClick={() => toggleSection("prices")}>
+          <header
+            className="admin-section__header"
+            onClick={() => toggleSection("prices")}
+          >
             <h2 className="admin-section__title">Конфигурация цен</h2>
           </header>
           {openSections.prices && (
-            <form className="admin-settings" onSubmit={(event) => onChangeHallPrice(event, onDataHallChange, setHallPriceStandart, setHallPriceVip)}>
+            <form
+              className="admin-settings"
+              onSubmit={(event) =>
+                onChangeHallPrice(
+                  event,
+                  onDataHallChange,
+                  setHallPriceStandart,
+                  setHallPriceVip,
+                )
+              }
+            >
               <div className="admin-settings__item">
-                <p className="admin-settings__title">Выберите зал для конфигурации:</p>
+                <p className="admin-settings__title">
+                  Выберите зал для конфигурации:
+                </p>
                 <div className="halls__list">
                   {data?.halls?.map((hall, index) => (
-                    <HallInList hall={hall} index={index} key={hall.id} idName="price-configuration"
-                      onClickFunc={() => { setHallPriceId(hall.id); setHallPriceStandart(hall.hall_price_standart); setHallPriceVip(hall.hall_price_vip); }} />
+                    <HallInList
+                      hall={hall}
+                      index={index}
+                      key={hall.id}
+                      idName="price-configuration"
+                      onClickFunc={() => {
+                        setHallPriceId(hall.id);
+                        setHallPriceStandart(hall.hall_price_standart);
+                        setHallPriceVip(hall.hall_price_vip);
+                      }}
+                    />
                   ))}
                 </div>
               </div>
               <div className="admin-settings__item">
-                <p className="admin-settings__title">Установите цены для типов кресел:</p>
+                <p className="admin-settings__title">
+                  Установите цены для типов кресел:
+                </p>
                 <div className="seat-price">
-                  <label className="admin__label seat-price__label">Цена, рублей
+                  <label className="admin__label seat-price__label">
+                    Цена, рублей
                     <div className="seat-price__item">
-                      <input className="admin__input seat-price__input" type="number" name="priceStandart" value={hallPriceStandart}
-                        onChange={(e) => { const v = Number(e.currentTarget.value); setHallPriceStandart(v >= 0 ? v : 0); }} required />
-                      <span className="seat-price__type"> за <img src={chair} alt="chair" /> обычные кресла</span>
+                      <input
+                        className="admin__input seat-price__input"
+                        type="number"
+                        name="priceStandart"
+                        value={hallPriceStandart}
+                        onChange={(e) => {
+                          const v = Number(e.currentTarget.value);
+                          setHallPriceStandart(v >= 0 ? v : 0);
+                        }}
+                        required
+                      />
+                      <span className="seat-price__type">
+                        {" "}
+                        за <img src={chair} alt="chair" /> обычные кресла
+                      </span>
                     </div>
                   </label>
-                  <label className="admin__label seat-price__label">Цена, рублей
+                  <label className="admin__label seat-price__label">
+                    Цена, рублей
                     <div className="seat-price__item">
-                      <input className="admin__input seat-price__input" type="number" name="priceVip" value={hallPriceVip}
-                        onChange={(e) => { const v = Number(e.currentTarget.value); setHallPriceVip(v >= 0 ? v : 0); }} required />
-                      <span className="seat-price__type">за <img src={chairVip} alt="chair-vip" /> VIP кресла</span>
+                      <input
+                        className="admin__input seat-price__input"
+                        type="number"
+                        name="priceVip"
+                        value={hallPriceVip}
+                        onChange={(e) => {
+                          const v = Number(e.currentTarget.value);
+                          setHallPriceVip(v >= 0 ? v : 0);
+                        }}
+                        required
+                      />
+                      <span className="seat-price__type">
+                        за <img src={chairVip} alt="chair-vip" /> VIP кресла
+                      </span>
                     </div>
-
-
-</label>
+                  </label>
                 </div>
               </div>
               <div className="actions actions_price-configuration">
-                <button className="btn_cancel" type="button"
-                  onClick={(event) => onCancelHallPrice(event, data, hallPriceId, setHallPriceStandart, setHallPriceVip)}>Отмена</button>
+                <button
+                  className="btn_cancel"
+                  type="button"
+                  onClick={(event) =>
+                    onCancelHallPrice(
+                      event,
+                      data,
+                      hallPriceId,
+                      setHallPriceStandart,
+                      setHallPriceVip,
+                    )
+                  }
+                >
+                  Отмена
+                </button>
                 <button className="btn_ok btn_save">Сохранить</button>
               </div>
             </form>
@@ -238,50 +411,126 @@ wDataHallValues?.hall_rows ?? 0);
 
         {/* Сетка сеансов */}
         <section className="admin-section">
-          <header className="admin-section__header" onClick={() => toggleSection("seances")}>
+          <header
+            className="admin-section__header"
+            onClick={() => toggleSection("seances")}
+          >
             <h2 className="admin-section__title">Сетка сеансов</h2>
           </header>
           {openSections.seances && (
-            <form className="admin-settings admin-settings_grid"
-              onSubmit={(event) => onChangeSeance(event, data, onDataChange, dataSeances, onDataSeancesChange)}>
+            <form
+              className="admin-settings admin-settings_grid"
+              onSubmit={(event) =>
+                onChangeSeance(
+                  event,
+                  data,
+                  onDataChange,
+                  dataSeances,
+                  onDataSeancesChange,
+                )
+              }
+            >
               <div className="admin-settings__item">
-                <button className="btn_ok" type="button" onClick={(event) => addFilm(event)}>Добавить фильм</button>
+                <button
+                  className="btn_ok"
+                  type="button"
+                  onClick={(event) => addFilm(event)}
+                >
+                  Добавить фильм
+                </button>
               </div>
               <div className="admin-settings__movies">
                 {data?.films?.map((film) => (
-                  <div className="admin-settings__movie-item" data-id={film.id} key={film.id}>
-                    <div className="admin-settings__movie-container" onMouseDown={(event) => onMovingFilmToAdd(event, onDataForSeance)}>
-                      <img className="admin-settings__movie-img" src={film.film_poster} alt="poster" />
+                  <div
+                    className="admin-settings__movie-item"
+                    data-id={film.id}
+                    key={film.id}
+                  >
+                    <div
+                      className="admin-settings__movie-container"
+                      onMouseDown={(event) =>
+                        onMovingFilmToAdd(event, onDataForSeance)
+                      }
+                    >
+                      <img
+                        className="admin-settings__movie-img"
+                        src={film.film_poster}
+                        alt="poster"
+                      />
                       <div className="admin-settings__movie-description">
                         <div className="admin-settings__movie-title">
-                          <p className="admin-settings__movie-name">{film.film_name}</p>
-                          <p className="admin-settings__movie-duration" data-duration={film.film_duration}>{film.film_duration} мин.</p>
+                          <p className="admin-settings__movie-name">
+                            {film.film_name}
+                          </p>
+                          <p
+                            className="admin-settings__movie-duration"
+                            data-duration={film.film_duration}
+                          >
+                            {film.film_duration} мин.
+                          </p>
                         </div>
                       </div>
                     </div>
-                    <button className="admin-settings__btn-remove admin-settings__btn-remove_movie" type="button"
-                      onClick={(event) => onRemoveFilm(event, film.id, onDataChange, film.film_name, openModal)} />
+                    <button
+                      className="admin-settings__btn-remove admin-settings__btn-remove_movie"
+                      type="button"
+                      onClick={(event) =>
+                        onRemoveFilm(
+                          event,
+                          film.id,
+                          onDataChange,
+                          film.film_name,
+                          openModal,
+                        )
+                      }
+                    />
                   </div>
                 ))}
               </div>
               <div className="admin-settings__halls-grid">
                 {data?.halls?.map((hall) => (
                   <div className="admin-settings__hall-item" key={hall.id}>
-                    <div className="admin-settings__hall-title">{hall.hall_name}</div>
+                    <div className="admin-settings__hall-title">
+                      {hall.hall_name}
+                    </div>
                     <div className="admin-settings__hall-grid">
                       {dataSeances.map((seance) => {
                         if (seance.seance_hallid === hall.id) {
                           const filmId = seance.seance_filmid;
-                          const filmName = data?.films?.find((film) => film.id === filmId).film_name;
-                          const seanceTimeInGrid = calcSeanceTimeInGrid(seance.seance_time);
+                          const filmName = data?.films?.find(
+                            (film) => film.id === filmId,
+                          )?.film_name;
+                          const seanceTimeInGrid = calcSeanceTimeInGrid(
+                            seance.seance_time,
+                          );
                           const bgColor = getFilmColor(filmId);
                           const widthInPercent = calcWidthInPercent(filmId);
                           return (
-                            <div className="admin-settings__movie-in-grid" key={seance.id}
-                              onMouseDown={(event) => onMovingFilmToRemove(event, onDataSeanceRemove, seance.id, data)}
-                              style={{ left: seanceTimeInGrid + "%", backgroundColor: bgColor, width: widthInPercent + "%" }} data-id={filmId}>
-                              <div className="admin-settings__movie-text">{filmName}</div>
-                              <div className="admin-settings__movie-mark" data-content={seance.seance_time} />
+                            <div
+                              className="admin-settings__movie-in-grid"
+                              key={seance.id}
+                              onMouseDown={(event) =>
+                                onMovingFilmToRemove(
+                                  event,
+                                  onDataSeanceRemove,
+                                  seance.id,
+                                  data,
+                                )
+                              }
+                              style={{
+                                left: seanceTimeInGrid + "%",
+                                backgroundColor: bgColor,
+                                width: widthInPercent + "%",
+                              }}
+                              data-id={filmId}
+                            >
+                              <div className="admin-settings__movie-text">
+                                {filmName}
+                              </div>
+                              <div
+                                className="admin-settings__movie-mark"
+                                data-content={seance.seance_time}
+                              />
                             </div>
                           );
                         }
@@ -290,11 +539,14 @@ wDataHallValues?.hall_rows ?? 0);
                   </div>
                 ))}
               </div>
-              <div cla
-
-
-ssName="actions actions_seance-grid">
-                <button className="btn_cancel" type="button" onClick={() => setDataSeances(data?.seances)}>Отмена</button>
+              <div className="actions actions_seance-grid">
+                <button
+                  className="btn_cancel"
+                  type="button"
+                  onClick={() => setDataSeances(data?.seances)}
+                >
+                  Отмена
+                </button>
                 <button className="btn_ok btn_save">Сохранить</button>
               </div>
             </form>
@@ -303,23 +555,44 @@ ssName="actions actions_seance-grid">
 
         {/* Открыть продажи */}
         <section className="admin-section">
-          <header className="admin-section__header" onClick={() => toggleSection("sales")}>
+          <header
+            className="admin-section__header"
+            onClick={() => toggleSection("sales")}
+          >
             <h2 className="admin-section__title">Открыть продажи</h2>
           </header>
           {openSections.sales && (
-            <form className="admin-settings" onSubmit={(event) => onOpenSale(event, onDataChange, openSaleValue, setOpenSaleValue)}>
+            <form
+              className="admin-settings"
+              onSubmit={(event) =>
+                onOpenSale(event, onDataChange, openSaleValue, setOpenSaleValue)
+              }
+            >
               <div className="admin-settings__item">
-                <p className="admin-settings__title admin-settings__title_open-sale">Выберите зал для открытия/закрытия продаж:</p>
+                <p className="admin-settings__title admin-settings__title_open-sale">
+                  Выберите зал для открытия/закрытия продаж:
+                </p>
                 <div className="halls__list">
                   {data?.halls?.map((hall, index) => (
-                    <HallInList hall={hall} index={index} key={hall.id} idName="open-sale"
-                      onClickFunc={() => setOpenSaleValue(hall.hall_open)} />
+                    <HallInList
+                      hall={hall}
+                      index={index}
+                      key={hall.id}
+                      idName="open-sale"
+                      onClickFunc={() => setOpenSaleValue(hall.hall_open)}
+                    />
                   ))}
                 </div>
               </div>
-              <p className="admin-settings__description">{openSaleValue === 0 ? "Всё готово к открытию" : ""}</p>
+              <p className="admin-settings__description">
+                {openSaleValue === 0 ? "Всё готово к открытию" : ""}
+              </p>
               <div className="actions actions_open-sale">
-                <button className="btn_ok">{openSaleValue === 0 ? "Открыть продажу билетов" : "Приостановить продажу билетов"}</button>
+                <button className="btn_ok">
+                  {openSaleValue === 0
+                    ? "Открыть продажу билетов"
+                    : "Приостановить продажу билетов"}
+                </button>
               </div>
             </form>
           )}
@@ -327,13 +600,25 @@ ssName="actions actions_seance-grid">
       </main>
 
       <AddFilm onDataChange={(newData) => onDataChange(newData)} />
-      <AddSeance data={data} dataForSeance={dataForSeance} onDataSeancesAdd={(newDataSeances) => onDataSeancesAdd(newDataSeances)} />
-      <AddHall onDataChange={(newData) => onDataChange(newData)} onDataHallValuesChange={(newDataHallValues) => onDataHallValuesChange(newDataHallValues)} />
+      <AddSeance
+        data={data}
+        dataForSeance={dataForSeance}
+        onDataSeancesAdd={(newDataSeances) => onDataSeancesAdd(newDataSeances)}
+      />
+      <AddHall
+        onDataChange={(newData) => onDataChange(newData)}
+        onDataHallValuesChange={(newDataHallValues) =>
+          onDataHallValuesChange(newDataHallValues)
+        }
+      />
 
       {confirmData.show && (
         <ConfirmModal
           message={confirmData.message}
-          onConfirm={() => { confirmData.onConfirm(); closeModal(); }}
+          onConfirm={() => {
+            confirmData.onConfirm();
+            closeModal();
+          }}
           onCancel={closeModal}
         />
       )}
