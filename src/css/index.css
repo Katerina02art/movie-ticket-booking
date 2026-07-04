@@ -1,175 +1,65 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap");
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
+body,
+h1,
+h2,
+h3,
+p,
+ul {
   margin: 0;
-  font-family: "Roboto", sans-serif;
-  font-size: 16px;
-  color: #000000;
-  background-color: #e6e6e6;
 }
 
-.movie {
-  position: relative;
+h1,
+h2,
+h3 {
+  font-size: inherit;
 }
 
-.movie::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 16px;
-  height: 16px;
-  background-color: #000000;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  z-index: 10;
-  border-radius: 2px;
+ul {
+  padding: 0;
+  list-style-type: none;
 }
 
-.buying-scheme {
-  overflow: hidden !important;
-  padding-bottom: 30px !important;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.conf-step__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #d9d9d9;
-  cursor: pointer;
-}
-
-.conf-step__title {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.9px;
-  color: #848484;
-}
-
-.conf-step__toggle {
-  width: 24px;
-  height: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.3s ease;
-}
-
-.conf-step__header--closed .conf-step__toggle {
-  transform: rotate(-180deg);
-}
-
-.conf-step__movie,
-.conf-step__movie *,
-.conf-step__seances-movie,
-.conf-step__seances-movie * {
-  user-select: none !important;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-
-.conf-step__seances-time--disabled,
-.conf-step__seances-time[disabled] {
-  cursor: not-allowed !important;
-  opacity: 0.6;
-}
-
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.popup__container {
-  width: 100%;
-  max-width: 480px;
-  background-color: #ffffff;
-  box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.25);
-}
-
-.popup__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #313131;
-  color: #ffffff;
-}
-
-.popup__title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.popup__dismiss {
-  background: transparent;
-  border: none;
-  color: #ffffff;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.popup__wrapper {
-  padding: 30px;
-}
-
-.popup__form label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  color: #848484;
-}
-
-.popup__form input,
-.popup__form textarea,
-.popup__form select {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #b7b7b7;
+input,
+button,
+textarea {
   font-family: inherit;
-  font-size: 16px;
 }
 
-@media (max-width: 768px) {
-  .page-header__logo {
-    display: block;
-    margin: 0 auto;
-    text-align: center;
-  }
+button {
+  border: none;
+}
 
-  .popup__wrapper .conf-step__buttons .conf-step__button {
-    width: auto !important;
-    min-width: 130px;
-    margin: 5px;
-  }
+:root {
+  --client-color: #c76f00;
+  --client-background-color: #f1ebe6f2;
+  --button-ok-color: #16a6af;
+  --admin-header-color: #63536c;
+  --admin-background-color: #eae9ebf2;
+  --admin-minor-color: #848484;
+}
 
-  .conf-step__header::before,
-  .conf-step__header::after {
-    display: none !important;
-  }
+/* main */
+body {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  font-family: "Roboto", "Tahoma", sans-serif;
+}
+
+a:hover {
+  color: var(--button-ok-color);
+  cursor: pointer;
+}
+
+button:hover {
+  color: #000000;
+  background-color: #ffffff;
+  cursor: pointer;
 }

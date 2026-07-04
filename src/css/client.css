@@ -156,17 +156,6 @@ body {
 
 .movies__img {
   width: 125px;
-  position: relative;
-}
-
-.movies__img::before {
-  content:"";
-  position: absolute;
-  top: -15px;
-  right: -5px;
-  width: 12px;
-  height: 12px;
-  background-color: #000;
 }
 
 .movies__description {
@@ -286,7 +275,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 13px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .buying-scheme__screen-img {

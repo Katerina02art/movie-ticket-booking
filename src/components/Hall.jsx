@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
-import createRequest from '../api/createRequest';
-import getHallConfig from '../ui/getHallConfig';
-import onReserve from '../ui/onReserve';
-import logo from '../assets/svg/logo.svg';
-import screenImg from '../assets/png/buying-scheme.png';
-import chairFree from '../assets/svg/chair-free.svg';
-import chairFreeVip from '../assets/svg/chair-free-vip.svg';
-import chairOccupied from '../assets/svg/chair-occupied.svg';
-import chairSelected from '../assets/svg/chair-selected.svg';
-import hint from '../assets/svg/hint.svg';
-
+import createRequest from "../api/createRequest";
+import getHallConfig from "../ui/getHallConfig";
+import onReserve from "../ui/onReserve";
+import logo from "../assets/svg/logo.svg";
+import screenImg from "../assets/png/buying-scheme.png";
+import chairFree from "../assets/svg/chair-free.svg";
+import chairFreeVip from "../assets/svg/chair-free-vip.svg";
+import chairOccupied from "../assets/svg/chair-occupied.svg";
+import chairSelected from "../assets/svg/chair-selected.svg";
+import hint from "../assets/svg/hint.svg";
 
 const Hall = () => {
   const [data, setData] = useState();
@@ -19,18 +18,18 @@ const Hall = () => {
 
   // Расчет даты
   const today = new Date();
-  const indexOfStartOfDay = state?.url.lastIndexOf('/');
+  const indexOfStartOfDay = state?.url.lastIndexOf("/");
   const countOfDays = Number(state?.url.slice(indexOfStartOfDay + 1));
   const date = new Date(today);
   date.setDate(today.getDate() + countOfDays);
-  const day = date.toLocaleString('ru-RU', { day: '2-digit' });
-  const month = date.toLocaleString('ru-RU', { month: '2-digit' });
-  const dateForRequest = date.getFullYear() + '-' + month + '-' + day;
+  const day = date.toLocaleString("ru-RU", { day: "2-digit" });
+  const month = date.toLocaleString("ru-RU", { month: "2-digit" });
+  const dateForRequest = date.getFullYear() + "-" + month + "-" + day;
 
   useEffect(() => {
     createRequest({
-      url: 'hallconfig?seanceId=' + state?.seanceId + '&date=' + dateForRequest,
-      method: 'GET',
+      url: "hallconfig?seanceId=" + state?.seanceId + "&date=" + dateForRequest,
+      method: "GET",
     }).then((response) => {
       if (response.success) {
         setData(response.result);
@@ -38,11 +37,11 @@ const Hall = () => {
     });
   }, [setData, dateForRequest, state]);
 
-  if (!state) return <Navigate to={'/'} />;
+  if (!state) return <Navigate to={"/"} />;
 
-  const root = document.querySelector(':root');
+  const root = document.querySelector(":root");
   if (root) {
-    root.classList.remove('root__admin');
+    root.classList.remove("root__admin");
   }
 
   const ticketDataForRequest = {
@@ -55,7 +54,7 @@ const Hall = () => {
     priceVip: state.hallPriceVip,
     filmName: state.filmName,
     hallName: state.hallName,
-    time: state.time
+    time: state.time,
   };
 
   return (
@@ -77,13 +76,19 @@ const Hall = () => {
 
             <div className="buying__hint">
               <img className="buying__hint-icon" src={hint} alt="hint" />
-              <p className="buying__hint-text">Тапните дважды, чтобы увеличить</p>
+              <p className="buying__hint-text">
+                Тапните дважды, чтобы увеличить
+              </p>
             </div>
           </div>
 
           <div className="buying-scheme">
             <div className="buying-scheme__content">
-              <img className="buying-scheme__screen-img" src={screenImg} alt="screen-img" />
+              <img
+                className="buying-scheme__screen-img"
+                src={screenImg}
+                alt="screen-img"
+              />
               <div className="buying-scheme__config">{getHallConfig(data)}</div>
             </div>
 
@@ -105,18 +110,23 @@ const Hall = () => {
                   Занято
                 </div>
                 <div className="buying-scheme__chairs-item">
-                  <img className="buying-scheme__chair-img_selected" src={chairSelected} alt="chair-free" />
+                  <img
+                    className="buying-scheme__chair-img_selected"
+                    src={chairSelected}
+                    alt="chair-free"
+                  />
                   Выбрано
                 </div>
               </div>
-
             </div>
           </div>
 
           <div className="actions actions_reserve">
             <button
               className="btn_ok btn_reserve"
-              onClick={event => onReserve(event, ticketDataForRequest, ticketData, navigate)}
+              onClick={(event) =>
+                onReserve(event, ticketDataForRequest, ticketData, navigate)
+              }
             >
               Забронировать
             </button>
@@ -125,6 +135,6 @@ const Hall = () => {
       </main>
     </div>
   );
-}
+};
 
 export default Hall;

@@ -54,7 +54,8 @@ const MoviesSection = () => {
                   <p className="movies__annotation">{film.film_description}</p>
                   <p className="movies__notes">
                     <span className="movies__duration">
-                      {film.film_duration} мин.{" "}
+                      {film.film_duration} минут
+                      {getEndOfWord(film.film_duration, "минут")}
                     </span>
                     <span className="movies__country">{film.film_origin}</span>
                   </p>
