@@ -481,3 +481,28 @@ body {
     padding: 21px 20px;
   }
 }
+.movies__title {
+  position: relative;
+  /* Убеждаемся, что есть отступ для прямоугольника */
+  margin-left: 15px;
+}
+.movies__title::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 25px;
+  background-color: #000;
+}
+
+.buying-scheme__wrapper,
+.buying-scheme {
+  overflow-x: auto;
+  overflow-y: visible !important;
+  padding-bottom: 20px;
+}
+.movies__btn_start-time-unavailable {
+  cursor: not-allowed !important;
+}

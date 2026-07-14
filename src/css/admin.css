@@ -668,3 +668,37 @@
     margin-left: 0;
   }
 }
+.conf-step__movie,
+.conf-step__seances-movie,
+.conf-step__seances {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .page-header__logo {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-header__logo {
+    display: block;
+    text-align: center;
+    margin: 0 auto 20px auto;
+  }
+
+  .conf-step__header::before {
+    display: none !important;
+  }
+  .conf-step__header::after {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+.popup__form-input_textarea {
+  box-sizing: border-box;
+  width: 100%;
+}
