@@ -128,3 +128,5 @@ const AdminPage = () => {
     </main>
   );
 };
+
+export default AdminPage;
